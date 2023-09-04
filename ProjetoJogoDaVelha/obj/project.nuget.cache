@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "5slMNqfXvs1agA5Rmf3nHg/GInJ43q4uVlAD1uEtVV9PBYJP9O1zq1+up657PWC48n3oep4nd9qVvLNyGBR40g==",
+  "success": true,
+  "projectFilePath": "C:\\Projetos\\ProjetoJogoDaVelha\\ProjetoJogoDaVelha\\ProjetoJogoDaVelha.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Você está executando a operação 'restore' com uma fonte 'HTTP', 'http://srvworkflow.squadra.com.br/NugetServer/nuget'. O acesso não HTTPS será removido em uma versão futura. Considere migrar para uma fonte 'HTTPS'."
+    }
+  ]
+}
