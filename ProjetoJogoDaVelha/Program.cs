@@ -64,7 +64,7 @@ else if (string.Equals(sorteio, "N", StringComparison.OrdinalIgnoreCase))
 }
 
 
-string[,] array = new string[3, 3] { 
+string[,] matriz = new string[3, 3] { 
     { "1", "2", "3" }, 
     { "4", "5", "6" }, 
     { "7", "8", "9" } };
@@ -75,7 +75,7 @@ string posicao = "0";
 for (int i = 0; i < 9; i++)
 {
     bool jogadaInvalida = false;
-    exibirTabuleiro(array);
+    exibirTabuleiro(matriz);
 
     if (!jogadaInvalida)
     {        
@@ -86,39 +86,25 @@ for (int i = 0; i < 9; i++)
             Console.Clear();
 
             bool numeroEncontrado = false;
+            numeroEncontrado = ProcuraNumeroDigitado(matriz, posicao, numeroEncontrado);
 
-            foreach (var item in array)
-            {
-                if (item == posicao)
-                {
-                    numeroEncontrado = true;
-                    break;
-                }
-            }
             if (!numeroEncontrado)
             {
 
                 while (!numeroEncontrado)
                 {
                     Console.Clear();
-                    exibirTabuleiro (array);
+                    exibirTabuleiro(matriz);
                     jogadaInvalida = true;
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("***** Posição escolhida não existe ou já foi escolhida! *****");
                     Console.ResetColor();
-                    
+
                     Console.WriteLine($"\n-> {jogardor1} Digite o número da posição conforme os números acima: ");
                     posicao = Console.ReadLine();
 
-                    //duplicado
-                    foreach (var item in array)
-                    {
-                        if (item == posicao)
-                        {
-                            numeroEncontrado = true;
-                            break;
-                        }
-                    }
+                    Console.Clear();
+                    numeroEncontrado = ProcuraNumeroDigitado(matriz, posicao, numeroEncontrado);
                 }
             }
         }
@@ -127,12 +113,58 @@ for (int i = 0; i < 9; i++)
             Console.WriteLine($"\n-> {jogardor2} Digite o número da posição conforme os números acima: ");
             posicao = Console.ReadLine();
             Console.Clear();
+
+
+            bool numeroEncontrado = false;
+            numeroEncontrado = ProcuraNumeroDigitado(matriz, posicao, numeroEncontrado);
+
+            if (!numeroEncontrado)
+            {
+
+                while (!numeroEncontrado)
+                {
+                    Console.Clear();
+                    exibirTabuleiro(matriz);
+                    jogadaInvalida = true;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("***** Posição escolhida não existe ou já foi escolhida! *****");
+                    Console.ResetColor();
+
+                    Console.WriteLine($"\n-> {jogardor2} Digite o número da posição conforme os números acima: ");
+                    posicao = Console.ReadLine();
+
+                    Console.Clear();
+                    numeroEncontrado = ProcuraNumeroDigitado(matriz, posicao, numeroEncontrado);
+                }
+            }
         }
     }
 
-    vezDoJogador1 = PreencherTabuleiro(array, posicao, vezDoJogador1);
+    vezDoJogador1 = PreencherTabuleiro(matriz, posicao, vezDoJogador1);
 
 
+    bool fimJogo = false;
+    while (!fimJogo)
+    {
+        if ((matriz[0, 0] == "X" && matriz[0, 1] == "X" && matriz[0, 2] == "X") || (matriz[0, 0] == "O" && matriz[0, 1] == "O" && matriz[0, 2] == "O"))
+        {
+            if (matriz[0, 0] == "X" && matriz[0, 1] == "X" && matriz[0, 2] == "X") 
+            {
+                Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}" );
+                fimJogo = true;
+            }
+            else if (matriz[0, 0] == "O" && matriz[0, 1] == "O" && matriz[0, 2] == "O")
+            {
+                Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}");
+                fimJogo = true;
+            }
+               
+        }
+        break;
+    }
+
+    if (fimJogo == true)
+        break;
 
 }
 
@@ -290,9 +322,19 @@ static bool PreencherTabuleiro(string[,] array, string posicao, bool vezDoJogado
     return vezDoJogador1;
 }
 
+static bool ProcuraNumeroDigitado(string[,] array, string posicao, bool numeroEncontrado)
+{
+    foreach (var item in array)
+    {
+        if (item == posicao)
+        {
+            numeroEncontrado = true;
+            break;
+        }
+    }
 
-/*
- * -Corrigido a mensagem de quem deve começar primeiro
- * -Iniciando a implantação da regra de posicao ocupada e posição não existente
- * testar escolhendo numeros diferentes na primeira jogada(aparentemente o num 1 funfa agora testar resto
- */
+    return numeroEncontrado;
+}
+
+
+//ToDo Verificação de Condições de Fim de Jogo
