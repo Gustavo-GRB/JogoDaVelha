@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System;
 using System.Security.Cryptography;
+using System.Xml;
 
 Console.WriteLine("       ____   ___    ____   ___       ___     ____      __ __    ___  _      __ __   ____ ");
 Console.WriteLine("      |    | /   \\  /    | /   \\     |   \\   /    |    |  |  |  /  _]| |    |  |  | /    |");
@@ -75,7 +76,7 @@ string posicao = "0";
 for (int i = 0; i < 9; i++)
 {
     bool jogadaInvalida = false;
-    exibirTabuleiro(matriz);
+    ExibirTabuleiro(matriz);
 
     if (!jogadaInvalida)
     {        
@@ -94,7 +95,7 @@ for (int i = 0; i < 9; i++)
                 while (!numeroEncontrado)
                 {
                     Console.Clear();
-                    exibirTabuleiro(matriz);
+                    ExibirTabuleiro(matriz);
                     jogadaInvalida = true;
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("***** Posição escolhida não existe ou já foi escolhida! *****");
@@ -124,7 +125,7 @@ for (int i = 0; i < 9; i++)
                 while (!numeroEncontrado)
                 {
                     Console.Clear();
-                    exibirTabuleiro(matriz);
+                    ExibirTabuleiro(matriz);
                     jogadaInvalida = true;
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("***** Posição escolhida não existe ou já foi escolhida! *****");
@@ -144,35 +145,101 @@ for (int i = 0; i < 9; i++)
 
 
     bool fimJogo = false;
-    while (!fimJogo)
+    if (!fimJogo)
     {
-        if ((matriz[0, 0] == "X" && matriz[0, 1] == "X" && matriz[0, 2] == "X") || (matriz[0, 0] == "O" && matriz[0, 1] == "O" && matriz[0, 2] == "O"))
+        //Verificação de vitória horizontal
+        for (int linha = 0; linha < 3; linha++)
         {
-            if (matriz[0, 0] == "X" && matriz[0, 1] == "X" && matriz[0, 2] == "X") 
+            int coluna0 = 0;
+            int coluna1 = 1;
+            int coluna2 = 2;
+
+            bool vencedorHorizontalLetraX = (matriz[linha, coluna0] == "X" && matriz[linha, coluna1] == "X" && matriz[linha, coluna2] == "X");
+            bool vencedorHorizontalLextraO = (matriz[linha, coluna0] == "O" && matriz[linha, coluna1] == "O" && matriz[linha, coluna2] == "O");
+
+            if (vencedorHorizontalLetraX || vencedorHorizontalLextraO)
             {
-                Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}" );
-                fimJogo = true;
+                if (vencedorHorizontalLetraX)
+                {
+                    Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
+                    fimJogo = true;
+                }
+                else if (vencedorHorizontalLextraO)
+                {
+                    Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
+                    fimJogo = true;
+                }
+                Console.ForegroundColor = ConsoleColor.Red;
+                ExibirTabuleiro(matriz);
+                Console.ResetColor();
             }
-            else if (matriz[0, 0] == "O" && matriz[0, 1] == "O" && matriz[0, 2] == "O")
-            {
-                Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}");
-                fimJogo = true;
-            }
-               
         }
-        break;
+
+        //Verificação de vitória vertical
+        for (int coluna = 0; coluna < 3; coluna++)
+        {            
+            int linha0 = 0;
+            int linha1 = 1;
+            int linha2 = 2;
+
+            bool vencedorVerticalLetraX = (matriz[linha0, coluna] == "X" && matriz[linha1, coluna] == "X" && matriz[linha2, coluna] == "X");
+            bool vencedorVerticalLextraO = (matriz[linha0, coluna] == "O" && matriz[linha1, coluna] == "O" && matriz[linha2, coluna] == "O");
+
+            if (vencedorVerticalLetraX || vencedorVerticalLextraO)
+            {
+                if (vencedorVerticalLetraX)
+                {
+                    Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
+                    fimJogo = true;
+                }
+                else if (vencedorVerticalLextraO)
+                {
+                    Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
+                    fimJogo = true;
+                }
+                Console.ForegroundColor = ConsoleColor.Red;
+                ExibirTabuleiro(matriz);
+                Console.ResetColor();
+            }
+        }
+        /*
+        //Verificação de vitória diagonais
+        bool vencedorDiagonal = ((matriz[0, 0] == "X" && matriz[1, 1] == "X" && matriz[2, 2] == "X") || (matriz[0, 0] == "O" && matriz[0, 0] == "O" && matriz[0, 0] == "O"));
+        if (vencedorDiagonal == (matriz[0, 0] == "X" && matriz[1, 1] == "X" && matriz[2, 2] == "X"))
+        {
+            Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
+            fimJogo = true;
+        }
+        else if (vencedorDiagonal == (matriz[0, 0] == "O" && matriz[1, 1] == "O" && matriz[2, 2] == "O")) 
+        {
+            Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
+            fimJogo = true;
+        }
+
+        bool vencedorDiagonal2 = ((matriz[0, 2] == "X" && matriz[1, 1] == "X" && matriz[2, 0] == "X") || (matriz[0, 2] == "O" && matriz[1, 1] == "O" && matriz[2, 0] == "O"));
+        if (vencedorDiagonal2 == (matriz[0, 2] == "X" && matriz[1, 1] == "X" && matriz[2, 0] == "X"))
+        {
+            Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
+            fimJogo = true;
+        }
+        else if (vencedorDiagonal == (matriz[0, 2] == "O" && matriz[1, 1] == "O" && matriz[2, 0] == "O"))
+        {
+            Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
+            fimJogo = true;
+        }*/
+
     }
 
     if (fimJogo == true)
-        break;
-
+       break;
+    
 }
 
 
 
 
 
-static void exibirTabuleiro(string[,] array)
+static void ExibirTabuleiro(string[,] array)
 {
     string p1 = array[0, 0];
     string p2 = array[0, 1];
@@ -338,3 +405,4 @@ static bool ProcuraNumeroDigitado(string[,] array, string posicao, bool numeroEn
 
 
 //ToDo Verificação de Condições de Fim de Jogo
+// implantar condições de vitoria 
