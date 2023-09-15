@@ -1,8 +1,4 @@
-﻿using System.Numerics;
-using System;
-using System.Security.Cryptography;
-using System.Xml;
-
+﻿
 Console.WriteLine("       ____   ___    ____   ___       ___     ____      __ __    ___  _      __ __   ____ ");
 Console.WriteLine("      |    | /   \\  /    | /   \\     |   \\   /    |    |  |  |  /  _]| |    |  |  | /    |");
 Console.WriteLine("      |__  ||     ||   __||     |    |    \\ |  o  |    |  |  | /  [_ | |    |  |  ||  o  |");
@@ -60,7 +56,7 @@ if (string.Equals(sorteio, "S", StringComparison.OrdinalIgnoreCase))
 
 else if (string.Equals(sorteio, "N", StringComparison.OrdinalIgnoreCase))
 {
-    Console.WriteLine($"Jogador {jogardor1} você começa a primeira jogada");
+    Console.WriteLine($"Jogador(a) {jogardor1} você começa a primeira jogada");
     numeroAleatorio = 1;
 }
 
@@ -73,7 +69,7 @@ string[,] matriz = new string[3, 3] {
 bool vezDoJogador1 = true;
 string posicao = "0";
 
-for (int i = 0; i < 9; i++)
+for (int iteracao = 0; iteracao < 9; iteracao++)
 {
     bool jogadaInvalida = false;
     ExibirTabuleiro(matriz);
@@ -202,40 +198,52 @@ for (int i = 0; i < 9; i++)
                 Console.ResetColor();
             }
         }
-        /*
+        
         //Verificação de vitória diagonais
         bool vencedorDiagonal = ((matriz[0, 0] == "X" && matriz[1, 1] == "X" && matriz[2, 2] == "X") || (matriz[0, 0] == "O" && matriz[0, 0] == "O" && matriz[0, 0] == "O"));
-        if (vencedorDiagonal == (matriz[0, 0] == "X" && matriz[1, 1] == "X" && matriz[2, 2] == "X"))
+        if (vencedorDiagonal)
         {
-            Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
-            fimJogo = true;
-        }
-        else if (vencedorDiagonal == (matriz[0, 0] == "O" && matriz[1, 1] == "O" && matriz[2, 2] == "O")) 
-        {
-            Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
-            fimJogo = true;
+            if (vencedorDiagonal == (matriz[0, 0] == "X" && matriz[1, 1] == "X" && matriz[2, 2] == "X"))
+            {
+                Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
+                fimJogo = true;
+            }
+            else if (vencedorDiagonal == (matriz[0, 0] == "O" && matriz[1, 1] == "O" && matriz[2, 2] == "O"))
+            {
+                Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
+                fimJogo = true;
+            }
         }
 
         bool vencedorDiagonal2 = ((matriz[0, 2] == "X" && matriz[1, 1] == "X" && matriz[2, 0] == "X") || (matriz[0, 2] == "O" && matriz[1, 1] == "O" && matriz[2, 0] == "O"));
-        if (vencedorDiagonal2 == (matriz[0, 2] == "X" && matriz[1, 1] == "X" && matriz[2, 0] == "X"))
+        if (vencedorDiagonal2)
         {
-            Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
-            fimJogo = true;
+            if (vencedorDiagonal2 == (matriz[0, 2] == "X" && matriz[1, 1] == "X" && matriz[2, 0] == "X"))
+            {
+                Console.WriteLine($"Fim do jogo o vencedor é {jogardor1}\n");
+                fimJogo = true;
+            }
+            else if (vencedorDiagonal2 == (matriz[0, 2] == "O" && matriz[1, 1] == "O" && matriz[2, 0] == "O"))
+            {
+                Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
+                fimJogo = true;
+            }
         }
-        else if (vencedorDiagonal == (matriz[0, 2] == "O" && matriz[1, 1] == "O" && matriz[2, 0] == "O"))
-        {
-            Console.WriteLine($"Fim do jogo o vencedor é {jogardor2}\n");
-            fimJogo = true;
-        }*/
+     
 
     }
 
-    if (fimJogo == true)
+    if (iteracao == 8)
+    {
+        Console.WriteLine("Deu empate!");
+        Console.ForegroundColor = ConsoleColor.Red;
+        ExibirTabuleiro(matriz);
+        Console.ResetColor();
+    }
+    else if (fimJogo == true)
        break;
-    
+   
 }
-
-
 
 
 
@@ -404,5 +412,3 @@ static bool ProcuraNumeroDigitado(string[,] array, string posicao, bool numeroEn
 }
 
 
-//ToDo Verificação de Condições de Fim de Jogo
-// implantar condições de vitoria 
