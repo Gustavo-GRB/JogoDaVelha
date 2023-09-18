@@ -25,5 +25,5 @@ Este jogo foi desenvolvido em C# para ser executado no console, permitindo que d
                 |     |
 
 6. O jogo irá infomar quem deve começar, caso tenha escolhido  por não sortear ele começa pelo jogador1.
-7. Basta digitar a posição de 1 á 9 conforme exibido no console.
+7. Basta digitar a posição de 1 a 9 conforme exibido no console.
 8. No fim do jodo ele exibe o nome do vencedor ou empate.
