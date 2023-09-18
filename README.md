@@ -1,4 +1,4 @@
-# Recriado o Jogo da Velha em C#
+# Recriando o Jogo da Velha em C#
 
 ![Alt text](image-1.png)
 
